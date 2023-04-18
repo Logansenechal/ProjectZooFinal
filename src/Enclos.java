@@ -1,22 +1,17 @@
-import java.util.ArrayList;
-
 public class Enclos {
     private String zoneName;
     private int zoneNum;
-
     private int enclosNum;
+    private tailleEnclos taille;
+    private typeEnclos type;
 
-    private String tailleEnclos;
-
-
-    public Enclos(String zoneName, int zoneNum,int enclosNum, String tailleEnclos) {
+    public Enclos(String zoneName, int zoneNum, int enclosNum, tailleEnclos taille, typeEnclos type) {
         this.zoneName = zoneName;
         this.zoneNum = zoneNum;
         this.enclosNum=enclosNum;
-        this.tailleEnclos=tailleEnclos;
+        this.taille=taille;
+        this.type = type;
     }
-
-
 
     public String getZoneName() {
         return zoneName;
@@ -35,11 +30,15 @@ public class Enclos {
     }
 
     public String getTailleEnclos() {
-        return tailleEnclos;
+        return taille.msg;
     }
 
-    public void setTailleEnclos(String tailleEnclos) {
-        this.tailleEnclos = tailleEnclos;
+    public String getTypeEnclos() {return type.msg;}
+
+    public void setTypeEnclos(typeEnclos type) {this.type = type;}
+
+    public void setTailleEnclos(tailleEnclos taille) {
+        this.taille = taille;
     }
 
     public int getEnclosNum() {
@@ -55,8 +54,7 @@ public class Enclos {
     @Override
     public String toString() {
         return "************************** "+Enclos()+" **************************\n"+
-                "Taille de l'enclos: " + tailleEnclos+"\n"
-                ;
+                getTailleEnclos()+getTypeEnclos();
     }
 }
 

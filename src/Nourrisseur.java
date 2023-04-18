@@ -1,6 +1,6 @@
 public class Nourrisseur extends Employe{
     private String nomZoneResponsable;
-private int numZoneResponsable;
+    private int numZoneResponsable;
 
     public Nourrisseur() {}
 
