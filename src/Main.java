@@ -1,3 +1,5 @@
+import java.io.File;
+import java.io.FileNotFoundException;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -14,6 +16,22 @@ public class Main {
         ArrayList<Aliment> arrayOfAliment = new ArrayList<>();
         ArrayList<Enclos> arrayOfEnclos = new ArrayList<>();
 
+        try {
+            File myFile=new File("listOfEmploye");
+            Scanner myReader=new Scanner(myFile);
+            while(myReader.hasNextLine()){
+                String data = myReader.nextLine();
+                String [] splitData= data.split(",",0);
+                if(splitData.length>2){
+                    arrayOfNourrisseur.add(new Nourrisseur(splitData[0],splitData[1],splitData[2],Integer.parseInt(splitData[3])));}
+                else{arrayOfGardien.add(new Gardien(splitData[0],splitData[1]));}
+            }
+
+            myReader.close();
+        }catch (FileNotFoundException e){
+            System.err.println("Une erreur est survenue: "+e);
+            e.printStackTrace();
+        }
 
         // Boucle while pour afficher le menu tant que l'utilisateur ne quitte pas.
         boolean loop = true;
@@ -99,11 +117,13 @@ public class Main {
 
         public static void ajouterAnimal (ArrayList < Animal > arrayOfAnimal) {
             // Déclaration des variables nécessaires pour créer un nouvel animal.
-            String nomAnimal, espece, nomZone = null;
+            String nomAnimal,espece = null, nomZone = null,especeMsg = null;;
             char genre = '\0';
             double quantiteAliment;
-            int frequenceRation, numZone, numEnclos;
+            int frequenceRation, numZone, numEnclos,especeInt;
             Scanner sc = new Scanner(System.in);
+            Domestique[]domestiques=Domestique.values();
+            Exotique[]exotiques=Exotique.values();
             String reponse = null;
             // Boucle do-while pour permettre d'ajouter plusieurs animaux.
             do {
@@ -122,7 +142,21 @@ public class Main {
 
                 // Demande de saisie de l'espèce de l'animal.
                 System.out.println("Entrez l'espèce de l'animal : ");
-                espece = sc.next();
+                if (typeAnimal.equalsIgnoreCase("Domestique")){
+
+                    for (Domestique domest: domestiques){
+                        System.out.println("["+ (domest.ordinal()+1)+"]: " + domest.name());}
+                    System.out.print("Entrez son choix:  ");
+                    especeInt= sc.nextInt();
+                    espece =domestiques[especeInt].name();
+                }
+                else{for (Exotique exot: exotiques){
+                    System.out.println("["+ (exot.ordinal()+1)+"]: "+ exot.name() );
+                    }System.out.print("Entrez son choix:  ");
+                    especeInt= sc.nextInt();
+                    espece =exotiques[especeInt].name();}
+                if(typeAnimal.equalsIgnoreCase("Domestique")){especeMsg=Domestique.valueOf(espece).getMsg();}
+                else{especeMsg=Exotique.valueOf(espece).getMsg();}
                 // Demande de saisie du genre de l'animal (M ou F).
                 do {
                     System.out.println("Entrez le genre de l'animal (M/F) : ");
@@ -189,17 +223,19 @@ public class Main {
                 // Vérifie si un animal avec le même nom et la même espèce existe déjà.
                 boolean animalExiste = false;
                 for (Animal animal : arrayOfAnimal) {
+
                     // Si un animal de la même espèce porte le même nom, on affiche un message d'erreur.
                     if (animal.getNom().equalsIgnoreCase(nomAnimal) && animal.getEspece().equalsIgnoreCase(espece)) {
                         animalExiste = true;
-                        System.err.println("un animal de l'espèce " + espece + " au nom de " + nomAnimal + " existe déja");
+
+                        System.err.println( nomAnimal + especeMsg +" existe déja");
                         break;
                     }
                 }
                 // Si aucun animal de la même espèce porte le même nom, on ajoute l'animal à la liste.
                 if (!animalExiste) {
                     arrayOfAnimal.add(animalAjout);
-                    System.out.println("L'animal"+ nomAnimal +  " à été ajouté à l'enclos " + nomZone+ numZone+ numEnclos);
+                    System.out.println( nomAnimal +" "+especeMsg+  " à été ajouté à l'enclos " + nomZone+ numZone+"."+numEnclos);
                     System.out.println(animalAjout);}
                 // Demande à l'utilisateur s'il veut ajouter un nouvel animal.
                 System.out.println("Voulez-vous ajoutez un nouvel animal? (O/N) : ");
@@ -302,8 +338,10 @@ public class Main {
         // Méthode qui affiche tous les employés du zoo.
         public static void afficherEmploye(ArrayList <Nourrisseur> arrayOfNourrisseur,ArrayList <Gardien> arrayOfGardien){
             // Affiche tous les nourrisseurs.
+            System.out.println("************************** Nourrisseur **************************");
             arrayOfNourrisseur.forEach((System.out::println));
             // Affiche tous les gardiens.
+            System.out.println("**************************   Gardien   **************************");
             arrayOfGardien.forEach((System.out::println));}
 
         //Méthode qui permet d'ajouter des aliments dans l'inventaire.

@@ -40,8 +40,7 @@ public class Employe {
 
     @Override
     public String toString() {
-        return"**************************info de l'employé**************************\n"+
-                "Numéro de l'employé: " + getNumEmploye()+"\n"+
+        return "Numéro de l'employé: " + getNumEmploye()+"\n"+
                 "Nom de l'employé: " + getNomEmploye()+"\n"+
                 "Prénom de l'employé: " + getPrenomEmploye()+"\n";
     }

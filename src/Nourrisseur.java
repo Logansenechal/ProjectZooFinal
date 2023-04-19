@@ -32,6 +32,6 @@ public class Nourrisseur extends Employe{
 
     @Override
     public String toString() {
-        return  super.toString()+"Nourrisseur responsable de la zone :" +getNomZoneResponsable()+getNumZoneResponsable() ;
+        return  super.toString()+"Nourrisseur responsable de la zone :" +getNomZoneResponsable()+getNumZoneResponsable()+"\n-----------------------------------------------------------------" ;
     }
 }
