@@ -54,7 +54,7 @@ public class Enclos {
     @Override
     public String toString() {
         return "************************** "+Enclos()+" **************************\n"+
-                getTailleEnclos()+getTypeEnclos();
+                getTailleEnclos()+getTypeEnclos()+"\n";
     }
 }
 

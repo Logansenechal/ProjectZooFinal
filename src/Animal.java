@@ -181,7 +181,8 @@ public class Animal {
 
     @Override
     public String toString() {
-        return getNom()+" "+getEspeceMsg()+"\n"+
+        return "====================== "+getNom()+" "+getEspeceMsg()+" ======================\n"+
+
                 "Type :" + getType() + '\n' +
                 "Genre :" + getGenre() + '\n'  +
                 "Groupe social : "+getGroupeSocial()+'\n' +

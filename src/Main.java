@@ -126,6 +126,29 @@ public class Main {
             String reponse = null;
             // Boucle do-while pour permettre d'ajouter plusieurs animaux.
             do {
+                // Demande à l'utilisateur de choisir la zone où l'animal sera logé.
+                String message=("Choissez le nom de la zone oû l'animal sera logé: \n[1] : Herbe \n[2] : Carni \n[3] : Omni");
+
+                switch (MyMethods.readChoix(message,1,3)) {
+                    case 1 -> nomZone = "Herbe";
+                    case 2 -> nomZone = "Carni";
+                    case 3 -> nomZone = "Omni";
+                }
+                System.out.println("Entrez le numéro de la zone oû l'animal sera logé : ");
+                numZone = sc.nextInt();
+                System.out.println("Entrer le numéro de l'enclo oû l'animal sera logé : ");
+                numEnclos = sc.nextInt();
+                boolean enclosExist=false;
+                for (Enclos enclo:arrayOfEnclos)
+                    if ((nomZone + numZone + "." + numEnclos).equals(enclo.getZoneName()+enclo.getZoneNum()+"."+enclo.getEnclosNum())) {
+                        enclosExist = true;
+                        break;
+                    }
+                if(!enclosExist){
+                    System.err.println("Impossible d'ajouter l'animal à l'enclos: L'enclos est inexistant");
+                    break;
+
+                }
                 // Demande de saisie du nom de l'animal.
                 System.out.println("Entrez le nom de l'animal :");
                 nomAnimal = sc.next();
@@ -205,29 +228,7 @@ public class Main {
                 System.out.println("Entrez le nombre de repas que l'animal recevera par jour : ");
                 frequenceRation = sc.nextInt();
 
-                // Demande à l'utilisateur de choisir la zone où l'animal sera logé.
-                String message=("Choissez le nom de la zone oû l'animal sera logé: \n[1] : Herbe \n[2] : Carni \n[3] : Omni");
 
-                switch (MyMethods.readChoix(message,1,3)) {
-                    case 1 -> nomZone = "Herbe";
-                    case 2 -> nomZone = "Carni";
-                    case 3 -> nomZone = "Omni";
-                }
-                System.out.println("Entrez le numéro de la zone oû l'animal sera logé : ");
-                numZone = sc.nextInt();
-                System.out.println("Entrer le numéro de l'enclo oû l'animal sera logé : ");
-                numEnclos = sc.nextInt();
-                boolean enclosExist=false;
-                for (Enclos enclo:arrayOfEnclos)
-                    if ((nomZone + numZone + "." + numEnclos).equals(enclo.getZoneName())) {
-                        enclosExist = true;
-                        break;
-                    }
-                if(!enclosExist){
-                    System.err.println("Impossible d'ajouter l'animal à l'enclos: L'enclos est inexistant");
-                    break;
-
-                }
                 // Création d'un objet Animal avec les informations saisies par l'utilisateur.
                 Animal animalAjout = new Animal(typeAnimal, nomAnimal, espece, genre, aliment, quantiteAliment, frequenceRation, Ddn.toString(), dateArrive.toString() , nomZone, numZone, numEnclos, lieuNaissance, groupeSocial);
 
