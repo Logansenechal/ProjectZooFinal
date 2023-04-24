@@ -1,7 +1,8 @@
+
+import com.cp.utils.MyMethods;
+
 import java.io.File;
 import java.io.FileNotFoundException;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.Scanner;
@@ -16,22 +17,10 @@ public class Main {
         ArrayList<Aliment> arrayOfAliment = new ArrayList<>();
         ArrayList<Enclos> arrayOfEnclos = new ArrayList<>();
 
-        try {
-            File myFile=new File("listOfEmploye");
-            Scanner myReader=new Scanner(myFile);
-            while(myReader.hasNextLine()){
-                String data = myReader.nextLine();
-                String [] splitData= data.split(",",0);
-                if(splitData.length>2){
-                    arrayOfNourrisseur.add(new Nourrisseur(splitData[0],splitData[1],splitData[2],Integer.parseInt(splitData[3])));}
-                else{arrayOfGardien.add(new Gardien(splitData[0],splitData[1]));}
-            }
-
-            myReader.close();
-        }catch (FileNotFoundException e){
-            System.err.println("Une erreur est survenue: "+e);
-            e.printStackTrace();
-        }
+        readFile("listOfAnimals",arrayOfNourrisseur,arrayOfGardien,arrayOfAnimal,arrayOfAliment,arrayOfEnclos);
+        readFile("listOfEmploye",arrayOfNourrisseur,arrayOfGardien,arrayOfAnimal,arrayOfAliment,arrayOfEnclos);
+        readFile("listOfEnclos",arrayOfNourrisseur,arrayOfGardien,arrayOfAnimal,arrayOfAliment,arrayOfEnclos);
+        readFile("listOfAliment",arrayOfNourrisseur,arrayOfGardien,arrayOfAnimal,arrayOfAliment,arrayOfEnclos);
 
         // Boucle while pour afficher le menu tant que l'utilisateur ne quitte pas.
         boolean loop = true;
@@ -48,13 +37,14 @@ public class Main {
                     [7]: Ajouter des aliment dans l'inventaire
                     [8]: Afficher les aliments de l'inventaire
                     [9]: Nourrir un animal
-                    [10]:Quitter""");
+                    [10]:Modifier une propriété d'un animal
+                    [11]:Quitter""");
 
             // Utilisation de la méthode readChoix() pour lire l'option sélectionnée par l'utilisateur.
-            switch (readChoix(message, 1, 10)) {
+            switch (MyMethods.readChoix(message, 1, 11)) {
                 // Exécution de la méthode appropriée en fonction de l'option sélectionnée.
                 case 1 -> ajouterEnclos(arrayOfEnclos);
-                case 2 -> ajouterAnimal(arrayOfAnimal);
+                case 2 -> ajouterAnimal(arrayOfAnimal,arrayOfEnclos);
                 case 3 -> afficherAnimauxParEnclos(arrayOfEnclos, arrayOfAnimal);
                 case 4 -> ajouterEmploye(arrayOfGardien, arrayOfNourrisseur);
                 case 5 -> afficherEmploye(arrayOfNourrisseur,arrayOfGardien);
@@ -62,7 +52,9 @@ public class Main {
                 case 7 -> ajouterAliment(arrayOfAliment);
                 case 8 -> afficherAliment( arrayOfAliment);
                 case 9 -> nourrirAnimal(arrayOfAnimal, arrayOfAliment);
-                case 10 -> loop = false; // Sortie de la boucle while pour quitter le programme.
+                case 10-> modifierAnimal(arrayOfAnimal,arrayOfEnclos);
+                case 11 -> loop = false; // Sortie de la boucle while pour quitter le programme.
+
             }
             }
     }
@@ -97,7 +89,9 @@ public class Main {
 
     public static void afficherAnimauxParEnclos(ArrayList<Enclos> enclos, ArrayList<Animal> animaux) {
         // Parcourt chaque enclos de la liste.
+        boolean i=true;
         for (Enclos enclo : enclos) {
+            i=false;
             // Affiche le détail de l'enclos.
             System.out.println(enclo);
             boolean animalTrouve = false;
@@ -108,14 +102,19 @@ public class Main {
                     System.out.println(animal);
                     animalTrouve = true;
                 }
-            }// Si aucun animal n'est trouvé dans l'enclos, affiche "Enclos vide.".
+            }
+
+            // Si aucun animal n'est trouvé dans l'enclos, affiche "Enclos vide.".
             if (!animalTrouve) {
                 System.out.println("Enclos vide.");
             }
         }
+        if (i){
+            System.err.println("Aucun enclos: Veuillez d'abord ajouter un enclos.");
+        }
     }
 
-        public static void ajouterAnimal (ArrayList < Animal > arrayOfAnimal) {
+        public static void ajouterAnimal (ArrayList < Animal > arrayOfAnimal,ArrayList <Enclos> arrayOfEnclos ) {
             // Déclaration des variables nécessaires pour créer un nouvel animal.
             String nomAnimal,espece = null, nomZone = null,especeMsg = null;;
             char genre = '\0';
@@ -133,7 +132,7 @@ public class Main {
                 // Demande à l'utilisateur de choisir le type de l'animal.
                 String msgExotic=("Selectionnez le type est l'animal :\n[1] : Exotique\n[2] : Domestique");
                 String typeAnimal = null;
-                switch (readChoix(msgExotic,1,2)){
+                switch (MyMethods.readChoix(msgExotic,1,2)){
                     // Si l'utilisateur choisit 1, le type de l'animal est Exotique.
                     case 1 -> typeAnimal = "Exotique";
                     // Si l'utilisateur choisit 2, le type de l'animal est Domestique.
@@ -141,20 +140,22 @@ public class Main {
                 }
 
                 // Demande de saisie de l'espèce de l'animal.
-                System.out.println("Entrez l'espèce de l'animal : ");
+                System.out.println("Quel est l'espèce de l'animal ? ");
                 if (typeAnimal.equalsIgnoreCase("Domestique")){
-
                     for (Domestique domest: domestiques){
                         System.out.println("["+ (domest.ordinal()+1)+"]: " + domest.name());}
                     System.out.print("Entrez son choix:  ");
                     especeInt= sc.nextInt();
-                    espece =domestiques[especeInt].name();
+                    espece =domestiques[especeInt-1].name();
                 }
-                else{for (Exotique exot: exotiques){
+                else{
+                    for (Exotique exot: exotiques){
                     System.out.println("["+ (exot.ordinal()+1)+"]: "+ exot.name() );
                     }System.out.print("Entrez son choix:  ");
                     especeInt= sc.nextInt();
-                    espece =exotiques[especeInt].name();}
+                    espece =exotiques[especeInt-1].name();
+                }
+
                 if(typeAnimal.equalsIgnoreCase("Domestique")){especeMsg=Domestique.valueOf(espece).getMsg();}
                 else{especeMsg=Exotique.valueOf(espece).getMsg();}
                 // Demande de saisie du genre de l'animal (M ou F).
@@ -181,16 +182,16 @@ public class Main {
 
                 // Demande de saisie de la date de naissance de l'animal.
                 String msgDdn=("Entrez la date de naissance de l'animal (jj/mm/aaaa) : ");
-
+                Date Ddn= (MyMethods.readDate(msgDdn));
                 // Demande de saisie de la date d'arrivée de l'animal.
-                Date Ddn= (readDate(msgDdn));
+
                 String msgArrive=("Entrer la date d'arrivée de l'animal (jj/mm/aaaa) : ");
-                Date dateArrive = readDate(msgArrive);
+                Date dateArrive = MyMethods.readDate(msgArrive);
 
                 // Demande de saisie du type d'aliment qui sera utilisé pour nourrir l'animal.
                 String aliment = null;
                 String msgAliment=("Entrer l'aliment qui sera principalement servi à l'animal\n[1] : Viande\n[2] : Graine\n[3] : Foin\n[4] : Autre ");
-                switch (readChoix(msgAliment,1,4)) {
+                switch (MyMethods.readChoix(msgAliment,1,4)) {
                     case 1 -> aliment = "Viande";
                     case 2 -> aliment = "Graine";
                     case 3 -> aliment = "Foin";
@@ -200,14 +201,14 @@ public class Main {
 
                 // Demande de saisi de la quantité d'aliment et de la fréquence de ration pour l'animal.
                 String msgQte=("Entrez la quantité de "+aliment + " que recevera l'animal par repas : ");
-                quantiteAliment = readDouble(msgQte);
+                quantiteAliment = MyMethods.readDouble(msgQte);
                 System.out.println("Entrez le nombre de repas que l'animal recevera par jour : ");
                 frequenceRation = sc.nextInt();
 
                 // Demande à l'utilisateur de choisir la zone où l'animal sera logé.
                 String message=("Choissez le nom de la zone oû l'animal sera logé: \n[1] : Herbe \n[2] : Carni \n[3] : Omni");
 
-                switch (readChoix(message,1,3)) {
+                switch (MyMethods.readChoix(message,1,3)) {
                     case 1 -> nomZone = "Herbe";
                     case 2 -> nomZone = "Carni";
                     case 3 -> nomZone = "Omni";
@@ -216,7 +217,17 @@ public class Main {
                 numZone = sc.nextInt();
                 System.out.println("Entrer le numéro de l'enclo oû l'animal sera logé : ");
                 numEnclos = sc.nextInt();
+                boolean enclosExist=false;
+                for (Enclos enclo:arrayOfEnclos)
+                    if ((nomZone + numZone + "." + numEnclos).equals(enclo.getZoneName())) {
+                        enclosExist = true;
+                        break;
+                    }
+                if(!enclosExist){
+                    System.err.println("Impossible d'ajouter l'animal à l'enclos: L'enclos est inexistant");
+                    break;
 
+                }
                 // Création d'un objet Animal avec les informations saisies par l'utilisateur.
                 Animal animalAjout = new Animal(typeAnimal, nomAnimal, espece, genre, aliment, quantiteAliment, frequenceRation, Ddn.toString(), dateArrive.toString() , nomZone, numZone, numEnclos, lieuNaissance, groupeSocial);
 
@@ -299,7 +310,7 @@ public class Main {
                 String typeEmploye = null;
 
                 // Lire le choix de l'utilisateur en appelant la méthode readChoix
-                int choix=readChoix(message,1,2);
+                int choix=MyMethods.readChoix(message,1,2);
 
                 // Utiliser le choix pour initialiser le type d'employé
                 switch (choix){
@@ -340,9 +351,16 @@ public class Main {
             // Affiche tous les nourrisseurs.
             System.out.println("************************** Nourrisseur **************************");
             arrayOfNourrisseur.forEach((System.out::println));
+            if (arrayOfNourrisseur.size()==0){
+                System.out.println("                          -Aucun nourrisseur-                        ");
+            }
             // Affiche tous les gardiens.
             System.out.println("**************************   Gardien   **************************");
-            arrayOfGardien.forEach((System.out::println));}
+            arrayOfGardien.forEach((System.out::println));
+            if (arrayOfGardien.size()==0){
+                System.out.println("                          -Aucun gardien-                        ");
+            }
+    }
 
         //Méthode qui permet d'ajouter des aliments dans l'inventaire.
         public static void ajouterAliment (ArrayList < Aliment > aliments) {
@@ -353,7 +371,7 @@ public class Main {
             String message=("Quel type d'aliment voulez-vous ajouter?\n[1] : Viande\n[2] : Graine\n[3] : Foin\n[4] : Autre");
 
             // On utilise la fonction readChoix() pour s'assurer que l'utilisateur choisit une option valide.
-            switch (readChoix(message,1,4)) {
+            switch (MyMethods.readChoix(message,1,4)) {
                 case 1 -> type = "Viande";
                 case 2 -> type = "Graine";
                 case 3 -> type = "Foin";
@@ -368,7 +386,7 @@ public class Main {
 
             // On demande à l'utilisateur la quantité de l'aliment à ajouter et on crée un objet Aliment correspondant.
             String msgQte=("Entrez la quantité de " + type + " en " + mesure + " à ajouter dans l'inventaire:");
-            double quantiteAliment = readDouble(msgQte);
+            double quantiteAliment = MyMethods.readDouble(msgQte);
             Aliment alimentAjout = new Aliment(type, quantiteAliment, mesure);
 
             // On vérifie si l'aliment existe déjà dans l'inventaire et on met à jour sa quantité.
@@ -386,8 +404,11 @@ public class Main {
         public static void afficherAliment(ArrayList < Aliment > arrayOfAliment){
             System.out.println("************************** inventaire **************************");
             // Affiche les aliments de l'inventaire.
-            arrayOfAliment.forEach(System.out::println);}
-
+            arrayOfAliment.forEach(System.out::println);
+            if (arrayOfAliment.size()==0){
+            System.out.println("                        -Inventaire vide-                        ");
+            }
+            }
         //Méthode qui permet d'ajouter un nouvel enclos.
         public static void ajouterEnclos (ArrayList < Enclos > enclos) {
             // On demande à l'utilisateur de choisir la zone où sera situé le nouvel enclos.
@@ -395,7 +416,7 @@ public class Main {
             Scanner sc = new Scanner(System.in);
             String nomZone = null;
             int numZone, numEnclos;
-            int choix = readChoix(message,1,3);
+            int choix = MyMethods.readChoix(message,1,3);
             switch (choix) {
                 case 1 -> nomZone = "Herbe";
                 case 2 -> nomZone = "Carni";
@@ -413,7 +434,7 @@ public class Main {
             String message2=("Quel est la taille du nouvel enclos: \n[1] : Petite \n[2] : Moyenne \n[3] : Grande");
 
 
-            switch (readChoix(message2,1,3)) {
+            switch (MyMethods.readChoix(message2,1,3)) {
                 case 1 -> taille = tailleEnclos.Petite;
                 case 2 -> taille = tailleEnclos.Moyenne;
                 case 3 -> taille = tailleEnclos.Grande;
@@ -421,7 +442,7 @@ public class Main {
             // On demande à l'utilisateur de choisir le type de l'enclos.
             String message3=("Quel est le type du nouvel enclos: \n[1] : Confinement à barreaux\n[2] : Confinement sans barreaux\n[3] : Enclos ouvert (protégé par des douves)");
             typeEnclos typeEnclos = null;
-            switch (readChoix(message3,1,3)) {
+            switch (MyMethods.readChoix(message3,1,3)) {
                 case 1 -> typeEnclos = typeEnclos.ConfinementBarreaux;
                 case 2 -> typeEnclos = typeEnclos.Confinement;
                 case 3 -> typeEnclos = typeEnclos.Ouvert;
@@ -443,79 +464,177 @@ public class Main {
                 System.out.println("L'enclos " + nomZone + numZone + "." + numEnclos + " à été ajouté aux enclos");
             }
         }
-        //Méthode qui lit et retourne un choix entier compris entre un minimum et un maximum donnés.
-        public static int readChoix(String message,int min,int max) {
-        Scanner sc = new Scanner(System.in);
-        System.out.println(message);
-        while (true) {
-            try {
-                int result = Integer.parseInt(sc.nextLine());// Lit l'entrée de l'utilisateur et la convertit en entier
-                if (result >= min && result <= max) {// Vérifie si le choix est compris entre min et max
-                    return result;// Retourne le choix si valide
-                } else {
-                    throw new IllegalStateException("Veuillez entrer un nombre entier entre " + min + " et " + max + " : " + result);
-                }
-            }catch(NumberFormatException e){// Gère l'exception si l'entrée n'est pas un entier
-                System.err.println("une erreur est survenue: la valeur entrée doit être un entier. ");
-                System.out.println(message);
-            }catch(RuntimeException e){// Gère l'exception si le choix est invalide
-                System.err.println("Une erreur est survenue: Veuillez entrer un nombre entier entre " + min + " et " + max  );
-                System.out.println(message);
+
+    public static void readFile(String file,ArrayList Nourrisseur,ArrayList Gardien,ArrayList Animal,ArrayList Aliment,ArrayList Enclos){try {
+        File myFile=new File(file);
+        Scanner myReader=new Scanner(myFile);
+        char genre;
+        while(myReader.hasNextLine()){
+            String data = myReader.nextLine();
+            String [] splitData= data.split(",",0);
+            if(file.equalsIgnoreCase("listOfEmploye")&& splitData.length==4){
+               Nourrisseur.add(new Nourrisseur(splitData[0],splitData[1],splitData[2],Integer.parseInt(splitData[3])));}
+            if(file.equalsIgnoreCase("listOfEmploye") && splitData.length==2){
+                Gardien.add(new Gardien(splitData[0],splitData[1]));}
+            if(file.equalsIgnoreCase("listOfAnimals")){if (splitData[3].equalsIgnoreCase("M")){genre='m';} else {genre='f';}
+                Animal.add(new Animal(splitData[0],splitData[1],splitData[2],genre,splitData[4], Double.parseDouble(splitData[5]),Integer.parseInt(splitData[6]),splitData[7],splitData[8],splitData[9],Integer.parseInt(splitData[10]),Integer.parseInt(splitData[11]),splitData[12],splitData[13]));}
+            if(file.equalsIgnoreCase("listOfAliment")){
+                Aliment.add(new Aliment(splitData[0],Double.parseDouble(splitData[1]),splitData[2]));}
+            if(file.equalsIgnoreCase("listOfEnclos")){
+                Enclos.add(new Enclos(splitData[0],Integer.parseInt(splitData[1]),Integer.parseInt(splitData[2]),tailleEnclos.valueOf(splitData[3]),typeEnclos.valueOf(splitData[4]) ));
             }
         }
-    }
-    //Méthode qui lit et retourne une date en s'assurant que le format soit correct et que la date sois cohérente avec la date d'aujourd'hui.
-    public static Date readDate(String message) {
 
-        // On crée un formateur de date qui va nous permettre de parser la date entrée par l'utilisateur.
-        SimpleDateFormat format = new SimpleDateFormat("dd/MM/yyyy");
-        Scanner scanner = new Scanner(System.in);
-        Date date = null;
-        boolean validDate = false;
-        while (!validDate) {
+        myReader.close();
+    }catch (FileNotFoundException e){
+        System.err.println("Une erreur est survenue: "+e);
+        e.printStackTrace();
+    }}
+    public static void modifierAnimal(ArrayList <Animal> arrayOfAnimal,ArrayList <Enclos> arrayOfEnclos){
+        Scanner sc= new Scanner(System.in);
+        Domestique[]domestiques=Domestique.values();
+        Exotique[]exotiques=Exotique.values();
+        System.out.println("Quel animal voulez-vous modifier:");
+        int i=1;
+        String msg;
+        for(Animal animal : arrayOfAnimal){
+            if(animal.getType().equalsIgnoreCase("Domestique")){msg=Domestique.valueOf(animal.getEspece()).getMsg();}
+            else{msg=Exotique.valueOf(animal.getEspece()).getMsg();}
+            System.out.println("["+i+"]: "+animal.getNom()+" "+msg);
+            i++;
+        }int animalInt;
 
-            // On affiche le message demandant à l'utilisateur de saisir une date.
-            System.out.println(message);
-            // On lit la date entrée par l'utilisateur.
-            String dateStr = scanner.nextLine();
-            try {
-                // On essaie de parser la date entrée par l'utilisateur.
-                date = format.parse(dateStr);
-                if (date.after(new Date())) {
-                    // Si la date est postérieure à aujourd'hui, on indique à l'utilisateur qu'il doit entrer une date antérieure ou égale à aujourd'hui.
-                    System.err.println("Veuillez entrer une date antérieur ou égale à aujourd'hui.");
-                }else{validDate=true;}
-                date = format.parse(dateStr);
-
-            } catch (ParseException e) {
-                // Si la date entrée par l'utilisateur ne peut pas être parsée, on indique à l'utilisateur le format attendu
-                System.err.println("Veuillez entrer une date sous le format: jj/mm/aaaa.");
+        animalInt=MyMethods.readChoix("Entrez votre choix : ",1,arrayOfAnimal.size());
+        String message="Choisissez la propriété de l'animal que vous voulez modifier\n[1]: Nom\n[2]: Type\n[3]: Espèce \n[4]: Genre\n[5]: Alimentation\n[6]: Date de naissance\n[7]: Date d'arrivé\n[8]: Lieu de naissance\n[9]: Groupe social\n[10]: Enclos";
+        switch(MyMethods.readChoix(message,1,10)){
+            case 1-> {
+                System.out.println("Entrez le nouveau nom de l'animal:");
+                String newName= sc.next();
+                arrayOfAnimal.get(animalInt-1).setNom(newName);
+                System.out.println("Le nom de l'animal a été modifier pour "+newName);
             }
-        }
-        // On retourne la date entrée par l'utilisateur
-        return date;
-    }
-    //Méthode qui permet de lire et de vérifier des doubles.
-    public static double readDouble(String message) {
-        Scanner sc = new Scanner(System.in);
-        System.out.println(message);
-        while (true) {
-            try {
-                double result = Double.parseDouble(sc.nextLine());// Lit l'entrée de l'utilisateur et la convertit en entier
-                // Si le resultat est supérieur à 0, on retourne le résultat.
-                if (result > 0) {
-                    return result;
-                // Sinon
-                }else {
-                    throw new IllegalStateException("La valeur entrée doit être supérieur à 0: " + result);
+            case 2->{
+                String msgExotic=("Selectionnez le type est l'animal :\n[1] : Exotique\n[2] : Domestique");
+                String typeAnimal = null;
+                switch (MyMethods.readChoix(msgExotic,1,2)){
+                    // Si l'utilisateur choisit 1, le type de l'animal est Exotique.
+                    case 1 -> typeAnimal = "Exotique";
+                    // Si l'utilisateur choisit 2, le type de l'animal est Domestique.
+                    case 2 -> typeAnimal = "Domestique";}
+                    arrayOfAnimal.get(animalInt-1).setType(typeAnimal);
+                System.out.println("Le type de l'animal a été modifier.");
+                }
+            case 3->{
+                String espece;
+                
+                System.out.println("Quel est l'espèce de l'animal ? ");
+                if (arrayOfAnimal.get(animalInt-1).getType().equalsIgnoreCase("Domestique")){
+                    for (Domestique domest: domestiques){
+                        System.out.println("["+ (domest.ordinal()+1)+"]: " + domest.name());}
+                    System.out.print("Entrez son choix:  ");
+                    int especeInt= sc.nextInt();
+                    espece =domestiques[especeInt-1].name();
+                }
+                else{
+                    for (Exotique exot: exotiques){
+                        System.out.println("["+ (exot.ordinal()+1)+"]: "+ exot.name() );
+                    }System.out.print("Entrez son choix:  ");
+                    int especeInt= sc.nextInt();
+                    espece =exotiques[especeInt-1].name();
+                }
+                if(arrayOfAnimal.get(animalInt-1).getType().equalsIgnoreCase("Domestique")){arrayOfAnimal.get(animalInt-1).setEspece(Domestique.valueOf(espece).getMsg());}
+                else{arrayOfAnimal.get(animalInt-1).setEspece(Exotique.valueOf(espece).getMsg());}
+                System.out.println("L'espèce de l'animal a été modifier.");}
+            case 4->{
+                char genre = 0;
+                do {
+                System.out.println("Entrez le genre de l'animal (M/F) : ");
+                try {
+                    genre = Character.toLowerCase(sc.next(".").charAt(0));
+                    if (genre != 'm' && genre != 'f') {
+                        throw new IllegalArgumentException("Veuillez entrer un genre valide : " + genre);
+                    }
+                } catch (Exception e) {
+                    System.err.println("Erreur : Veuillez entrer un genre valide." );
+                    sc.nextLine();
+                }
+            } while (genre != 'm' && genre != 'f');
+            arrayOfAnimal.get(animalInt-1).setGenre(genre);
+                System.out.println("Le genre de l'animal a été modifier.");}
+            case 5->{
+                String aliment = null;
+                String msgAliment=("Entrer l'aliment qui sera principalement servi à l'animal\n[1] : Viande\n[2] : Graine\n[3] : Foin\n[4] : Autre ");
+                switch (MyMethods.readChoix(msgAliment,1,4)) {
+                    case 1 -> aliment = "Viande";
+                    case 2 -> aliment = "Graine";
+                    case 3 -> aliment = "Foin";
+                    case 4 -> {
+                        System.out.println("Veuillez spécifier le type d'aliment qui sera servi à l'animal : ");
+                        aliment = sc.next();}}
+                arrayOfAnimal.get(animalInt-1).setAliment(aliment);
+                // Demande de saisi de la quantité d'aliment et de la fréquence de ration pour l'animal.
+                String msgQte=("Entrez la quantité de "+aliment + " que recevera l'animal par repas : ");
+                arrayOfAnimal.get(animalInt-1).setQuantiteAliment(MyMethods.readDouble(msgQte));
+                String msgFreq=("Entrez le nombre de repas que l'animal recevera par jour : ");
+                arrayOfAnimal.get(animalInt-1).setFrequenceRation(MyMethods.readChoix(msgFreq,1,6));
+                System.out.println("Le rationnement de l'animal a été modifier.");;
+            }
+            case 6->{String msgDdn=("Entrez la date de naissance de l'animal (jj/mm/aaaa) : ");
+                Date Ddn= (MyMethods.readDate(msgDdn));
+                arrayOfAnimal.get(animalInt-1).setDdn(String.valueOf(Ddn));
+                System.out.println("La date de naissance de l'animal a été modifier.");}
+
+            case 7->{String msgArrive=("Entrer la date d'arrivée de l'animal (jj/mm/aaaa) : ");
+                Date dateArrive = MyMethods.readDate(msgArrive);
+                arrayOfAnimal.get(animalInt-1).setDateArrivee(String.valueOf(dateArrive));
+                System.out.println("La date d'arrivé de l'animal a été modifier.");}
+            case 8->{
+                // Demande de saisie du lieu de naissance de l'animal.
+                System.out.println("Entrez le lieu de naissance de l'animal :");
+                String lieuNaissance = sc.next();
+                arrayOfAnimal.get(animalInt-1).setLieuNaissance(lieuNaissance);
+                System.out.println("Le lieu de naissance de l'animal a été modifier.");}
+            case 9->{
+                // Demande de saisie du groupe social de l'animal.
+                System.out.println("Entrez le groupe social de l'animal : ");
+                String groupeSocial= sc.next();
+                arrayOfAnimal.get(animalInt-1).setGroupeSocial(groupeSocial);
+                System.out.println("Le groupe social de l'animal a été modifier.");}
+            case 10->{
+                // Demande à l'utilisateur de choisir la zone où l'animal sera logé.
+                String msgZone=("Choissez le nom de la zone oû l'animal sera logé: \n[1] : Herbe \n[2] : Carni \n[3] : Omni");
+                String nomZone = null;
+
+                switch (MyMethods.readChoix(msgZone,1,3)) {
+                    case 1 -> nomZone = "Herbe";
+                    case 2 -> nomZone = "Carni";
+                    case 3 -> nomZone = "Omni";
                 }
 
+                int numZone = MyMethods.readChoix("Entrez le numéro de la zone oû l'animal sera logé : ",1,50);
 
-            }catch(RuntimeException e){// Attrape les exceptions de type RuntimeException, affiche un message d'erreur personnalisé et affiche encore le message.
-                System.err.println("Une erreur est survenue: La valeur entrée doit être supérieur à 0." );
-                System.out.println(message);
+                int numEnclos = MyMethods.readChoix("Entrer le numéro de l'enclo oû l'animal sera logé : ",1,100);
+                boolean enclosExist=false;
+                for (Enclos enclo: arrayOfEnclos)
+                    if ((nomZone + numZone + "." + numEnclos).equals(enclo.getZoneName()+enclo.getZoneNum()+"."+enclo.getEnclosNum())) {
+                        enclosExist = true;
+                        break;
+                    }
+                if(!enclosExist){
+                    System.err.println("Impossible d'ajouter l'animal à l'enclos: L'enclos est inexistant");
+                    break;
 
-    }}}}
+                }
+
+                arrayOfAnimal.get(animalInt-1).setNomZone(nomZone);
+                arrayOfAnimal.get(animalInt-1).setNumZone(numZone);
+                arrayOfAnimal.get(animalInt-1).setNumEnclos(numEnclos);
+                System.out.println("L'enclos de "+arrayOfAnimal.get(animalInt-1).getNom()+" à été modifier pour l'enclos : "+arrayOfAnimal.get(animalInt-1).getNomZone()+arrayOfAnimal.get(animalInt-1).getNumZone()+"."+arrayOfAnimal.get(animalInt-1).getNumEnclos());}
+            }
+        }
+}
+
+
 
 
 

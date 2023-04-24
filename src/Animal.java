@@ -95,7 +95,10 @@ public class Animal {
     public String getEspece() {
         return espece;
     }
-
+    public String getEspeceMsg(){
+        if (getType().equalsIgnoreCase("Domestique")){return (Domestique.valueOf(getEspece())).msg;}
+        else return (Exotique.valueOf(getEspece())).msg;
+    }
     public void setEspece(String espece) {
         this.espece = espece;
     }
@@ -178,8 +181,7 @@ public class Animal {
 
     @Override
     public String toString() {
-        return "Nom de l'animal:"+getNom()+"\n"+
-                "Espèce :" +getEspece()+'\n' +
+        return getNom()+" "+getEspeceMsg()+"\n"+
                 "Type :" + getType() + '\n' +
                 "Genre :" + getGenre() + '\n'  +
                 "Groupe social : "+getGroupeSocial()+'\n' +
