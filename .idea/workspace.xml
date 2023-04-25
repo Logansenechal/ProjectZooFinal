@@ -4,22 +4,7 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="2cbb9ed2-23e0-455e-90e7-aab482a9cb23" name="Changes" comment="Tp2 ProjectZoo">
-      <change beforePath="$PROJECT_DIR$/listOfAliment" beforeDir="false" afterPath="$PROJECT_DIR$/listOfAliment" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/ProjectZoo/Aliment.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/ProjectZoo/Aliment.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/ProjectZoo/Animal.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/ProjectZoo/Animal.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/ProjectZoo/Domestique.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/ProjectZoo/Domestique.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/ProjectZoo/Employe.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/ProjectZoo/Employe.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/ProjectZoo/Enclos.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/ProjectZoo/Enclos.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/ProjectZoo/Exotique.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/ProjectZoo/Exotique.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/ProjectZoo/Gardien.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/ProjectZoo/Gardien.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/ProjectZoo/Main.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/ProjectZoo/Main.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/ProjectZoo/Nourrisseur.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/ProjectZoo/Nourrisseur.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/ProjectZoo/com/cp/utils/MyMethods.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/ProjectZoo/com/cp/utils/MyMethods.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/ProjectZoo/tailleEnclos.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/ProjectZoo/tailleEnclos.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/ProjectZoo/typeEnclos.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/ProjectZoo/typeEnclos.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Main.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Main.java" afterDir="false" />
-    </list>
+    <list default="true" id="2cbb9ed2-23e0-455e-90e7-aab482a9cb23" name="Changes" comment="Tp2 ProjectZoo" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -59,7 +44,14 @@
       <option name="project" value="LOCAL" />
       <updated>1682428548032</updated>
     </task>
-    <option name="localTasksCounter" value="2" />
+    <task id="LOCAL-00002" summary="Tp2 ProjectZoo">
+      <created>1682433288885</created>
+      <option name="number" value="00002" />
+      <option name="presentableId" value="LOCAL-00002" />
+      <option name="project" value="LOCAL" />
+      <updated>1682433288885</updated>
+    </task>
+    <option name="localTasksCounter" value="3" />
     <servers />
   </component>
   <component name="VcsManagerConfiguration">
