@@ -1,9 +1,9 @@
 public class Aliment {
 
-    String typeAliment;
-    double stockAliment;
+    private String typeAliment;
+    private double stockAliment;
 
-    String mesureAliment;
+    private String mesureAliment;
 
     public Aliment(String typeAliment, double stockAliment, String mesureAliment) {
         this.typeAliment = typeAliment;
