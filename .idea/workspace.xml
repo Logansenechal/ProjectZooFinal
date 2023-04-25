@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="AutoImportSettings">
+    <option name="autoReloadType" value="SELECTIVE" />
+  </component>
+  <component name="ChangeListManager">
+    <list default="true" id="2cbb9ed2-23e0-455e-90e7-aab482a9cb23" name="Changes" comment="Tp2 ProjectZoo">
+      <change beforePath="$PROJECT_DIR$/listOfAliment" beforeDir="false" afterPath="$PROJECT_DIR$/listOfAliment" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/ProjectZoo/Aliment.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/ProjectZoo/Aliment.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/ProjectZoo/Animal.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/ProjectZoo/Animal.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/ProjectZoo/Domestique.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/ProjectZoo/Domestique.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/ProjectZoo/Employe.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/ProjectZoo/Employe.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/ProjectZoo/Enclos.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/ProjectZoo/Enclos.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/ProjectZoo/Exotique.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/ProjectZoo/Exotique.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/ProjectZoo/Gardien.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/ProjectZoo/Gardien.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/ProjectZoo/Main.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/ProjectZoo/Main.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/ProjectZoo/Nourrisseur.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/ProjectZoo/Nourrisseur.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/ProjectZoo/com/cp/utils/MyMethods.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/ProjectZoo/com/cp/utils/MyMethods.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/ProjectZoo/tailleEnclos.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/ProjectZoo/tailleEnclos.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/ProjectZoo/typeEnclos.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/ProjectZoo/typeEnclos.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Main.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Main.java" afterDir="false" />
+    </list>
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+  </component>
+  <component name="MarkdownSettingsMigration">
+    <option name="stateVersion" value="1" />
+  </component>
+  <component name="ProjectId" id="2Ov5bgnBNWNxBl0OisJAmIrc9hO" />
+  <component name="ProjectViewState">
+    <option name="hideEmptyMiddlePackages" value="true" />
+    <option name="showLibraryContents" value="true" />
+  </component>
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "RunOnceActivity.OpenProjectViewOnStart": "true",
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "last_opened_file_path": "C:/Users/2142220/IdeaProjects/ProjectZooFinal/ProjectZoo"
+  }
+}]]></component>
+  <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="2cbb9ed2-23e0-455e-90e7-aab482a9cb23" name="Changes" comment="" />
+      <created>1682428288241</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1682428288241</updated>
+    </task>
+    <task id="LOCAL-00001" summary="Tp2 ProjectZoo">
+      <created>1682428548032</created>
+      <option name="number" value="00001" />
+      <option name="presentableId" value="LOCAL-00001" />
+      <option name="project" value="LOCAL" />
+      <updated>1682428548032</updated>
+    </task>
+    <option name="localTasksCounter" value="2" />
+    <servers />
+  </component>
+  <component name="VcsManagerConfiguration">
+    <MESSAGE value="Tp2 ProjectZoo" />
+    <option name="LAST_COMMIT_MESSAGE" value="Tp2 ProjectZoo" />
+  </component>
+</project>

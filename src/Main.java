@@ -278,11 +278,11 @@ public class Main {
                             // Si la quantité d'aliment nécessaire pour nourrir l'animal est supérieure à la quantité d'aliment en stock, on affiche un message d'erreur et on arrête la méthode.
                             if (animal.getQuantiteAliment() > aliment.getStockAliment()){
                                 System.err.println("Stock insuffisant pour nourrir l'animal");
-                                return;}
+                                break;}
 
                             // Sinon, on met à jour le stock d'aliment et on affiche un message pour indiquer que l'animal a été nourri.
                             else {aliment.setStockAliment(aliment.getStockAliment()-animal.getQuantiteAliment());
-                                System.out.println("l'animal "+nomAnimal +" à été nourri.");}
+                                System.out.println("l'animal "+nomAnimal +" à été nourri:"+ "-"+aliment.getStockAliment()+" "+aliment.getMesureAliment()+" de "+ aliment.getTypeAliment());}
                         }
                     }
                 }
