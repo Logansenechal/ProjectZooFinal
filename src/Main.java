@@ -97,7 +97,7 @@ public class Main {
             boolean animalTrouve = false;
             // Boucle for pour parcourir les animaux.
             for (Animal animal : animaux) {
-                // Affiche l'animal s'il est situé dans cette enclos.
+                // Affiche l'animal s'il est situé dans cet enclos.
                 if (animal.getNomZone().equals(enclo.getZoneName()) && animal.getNumZone() == (enclo.getZoneNum()) && animal.getNumEnclos() == enclo.getEnclosNum()) {
                     System.out.println(animal);
                     animalTrouve = true;
@@ -108,7 +108,7 @@ public class Main {
             if (!animalTrouve) {
                 System.out.println("Enclos vide.");
             }
-        }
+        }//Si aucun enclos n'est trouvé, affiche "Aucun enclos"
         if (i){
             System.err.println("Aucun enclos: Veuillez d'abord ajouter un enclos.");
         }
@@ -303,7 +303,7 @@ public class Main {
                 String nomEmploye = sc.next();
 
                 // Demander le prénom de l'employé
-                System.out.println("Entrer le prenom du nouvel employé: ");
+                System.out.println("Entrer le prénom du nouvel employé: ");
                 String prenomEmploye = sc.next();
 
                 // Afficher les choix pour le type d'employé à ajouter
@@ -465,36 +465,48 @@ public class Main {
                 System.out.println("L'enclos " + nomZone + numZone + "." + numEnclos + " à été ajouté aux enclos");
             }
         }
-
+//Méthode qui lit un fichier texte contenant les informations des classes et les ajoutes dans le bon tableau dynamique selon le nom du fichier texte et du nombre de propriétés
     public static void readFile(String file,ArrayList Nourrisseur,ArrayList Gardien,ArrayList Animal,ArrayList Aliment,ArrayList Enclos){try {
         File myFile=new File(file);
+        //Defini l'objet scanner.
         Scanner myReader=new Scanner(myFile);
         char genre;
+        //Boucle while tant que le fichier texte contient des lignes.
         while(myReader.hasNextLine()){
+            //data est égale à la ligne du fichier texte.
             String data = myReader.nextLine();
+            //On case les propriétés séparées par des virgules dans un tableau.
             String [] splitData= data.split(",",0);
+            //Si le fichier texte est nommé listOfEmploye et qu'il contient 4 propriétés on ajoute l'employé dans le tableau des nourrisseurs.
             if(file.equalsIgnoreCase("listOfEmploye")&& splitData.length==4){
                Nourrisseur.add(new Nourrisseur(splitData[0],splitData[1],splitData[2],Integer.parseInt(splitData[3])));}
+            //Si le fichier texte est nommé listOfEmploye et qu'il contient 2 propriétés on ajoute l'employé dans le tableau des gardiens.
             if(file.equalsIgnoreCase("listOfEmploye") && splitData.length==2){
                 Gardien.add(new Gardien(splitData[0],splitData[1]));}
+            //Si le fichier texte est nommé listOfAnimals on l'ajoute dans le tableau des animaux.
             if(file.equalsIgnoreCase("listOfAnimals")){if (splitData[3].equalsIgnoreCase("M")){genre='m';} else {genre='f';}
                 Animal.add(new Animal(splitData[0],splitData[1],splitData[2],genre,splitData[4], Double.parseDouble(splitData[5]),Integer.parseInt(splitData[6]),splitData[7],splitData[8],splitData[9],Integer.parseInt(splitData[10]),Integer.parseInt(splitData[11]),splitData[12],splitData[13]));}
+            //Si le fichier texte est nommé listOfAliment on ajoute l'animal dans le tableau des animaux.
             if(file.equalsIgnoreCase("listOfAliment")){
                 Aliment.add(new Aliment(splitData[0],Double.parseDouble(splitData[1]),splitData[2]));}
+            //Si le fichier texte est nommé listOfEnclos on ajoute l'enclos dans le tableau des enclos.
             if(file.equalsIgnoreCase("listOfEnclos")){
                 Enclos.add(new Enclos(splitData[0],Integer.parseInt(splitData[1]),Integer.parseInt(splitData[2]),tailleEnclos.valueOf(splitData[3]),typeEnclos.valueOf(splitData[4]) ));
             }
         }
-
+        //On ferme le reader du fichier texte.
         myReader.close();
     }catch (FileNotFoundException e){
         System.err.println("Une erreur est survenue: "+e);
         e.printStackTrace();
     }}
+
+    //Méthode qui permet de modifier des propriétés d'un animal.
     public static void modifierAnimal(ArrayList <Animal> arrayOfAnimal,ArrayList <Enclos> arrayOfEnclos){
         Scanner sc= new Scanner(System.in);
         Domestique[]domestiques=Domestique.values();
         Exotique[]exotiques=Exotique.values();
+        //Demande de selection de l'animal à modifier en les affichants un par un et en leur attribuant un nombre.
         System.out.println("Quel animal voulez-vous modifier:");
         int i=1;
         String msg;
@@ -503,17 +515,22 @@ public class Main {
             else{msg=Exotique.valueOf(animal.getEspece()).getMsg();}
             System.out.println("["+i+"]: "+animal.getNom()+" "+msg);
             i++;
-        }int animalInt;
-
+        }
+        //Selection de l'animal
+        int animalInt;
         animalInt=MyMethods.readChoix("Entrez votre choix : ",1,arrayOfAnimal.size());
+
+        //Demande à l'usagée de sélectionner la propriété de l'animal qui souhaite modifier.
         String message="Choisissez la propriété de l'animal que vous voulez modifier\n[1]: Nom\n[2]: Type\n[3]: Espèce \n[4]: Genre\n[5]: Alimentation\n[6]: Date de naissance\n[7]: Date d'arrivé\n[8]: Lieu de naissance\n[9]: Groupe social\n[10]: Enclos";
         switch(MyMethods.readChoix(message,1,10)){
+            //Si l'usagé choisis de changer le nom de l'animal, on lui demande d'entrer le nouveau nom et on lui attribue son nouveau nom.
             case 1-> {
                 System.out.println("Entrez le nouveau nom de l'animal:");
                 String newName= sc.next();
                 arrayOfAnimal.get(animalInt-1).setNom(newName);
                 System.out.println("Le nom de l'animal a été modifier pour "+newName);
             }
+            //Si l'usagé choisis de modifier le type de l'animal, On lui demande de sélectionner son nouveau type et on l'attribue l'animal.
             case 2->{
                 String msgExotic=("Selectionnez le type est l'animal :\n[1] : Exotique\n[2] : Domestique");
                 String typeAnimal = null;
@@ -523,12 +540,13 @@ public class Main {
                     // Si l'utilisateur choisit 2, le type de l'animal est Domestique.
                     case 2 -> typeAnimal = "Domestique";}
                     arrayOfAnimal.get(animalInt-1).setType(typeAnimal);
-                System.out.println("Le type de l'animal a été modifier.");
+                System.out.println("Le type de l'animal a été modifier pour "+typeAnimal);
                 }
+            //Si l'usagé choisis de modifier l'espèce de l'animal
             case 3->{
                 String espece;
-                
                 System.out.println("Quel est l'espèce de l'animal ? ");
+                //On affiche les animaux de son type d'animal
                 if (arrayOfAnimal.get(animalInt-1).getType().equalsIgnoreCase("Domestique")){
                     for (Domestique domest: domestiques){
                         System.out.println("["+ (domest.ordinal()+1)+"]: " + domest.name());}
@@ -539,13 +557,17 @@ public class Main {
                 else{
                     for (Exotique exot: exotiques){
                         System.out.println("["+ (exot.ordinal()+1)+"]: "+ exot.name() );
-                    }System.out.print("Entrez son choix:  ");
+                    }
+                    //On lui demande de sélectionner la nouvelle espèce de l'animal
+                    System.out.print("Entrez son choix:  ");
                     int especeInt= sc.nextInt();
                     espece =exotiques[especeInt-1].name();
                 }
+                //On attribue la nouvelle espèce à l'animal
                 if(arrayOfAnimal.get(animalInt-1).getType().equalsIgnoreCase("Domestique")){arrayOfAnimal.get(animalInt-1).setEspece(Domestique.valueOf(espece).getMsg());}
                 else{arrayOfAnimal.get(animalInt-1).setEspece(Exotique.valueOf(espece).getMsg());}
-                System.out.println("L'espèce de l'animal a été modifier.");}
+                System.out.println("L'espèce de l'animal a été modifier");}
+            //Si l'usagé choisis de modifier le genre de l'animal, On lui demande de sélectionner son nouveau genre tant que le genre n'est pas valide('m'ou'f') et on l'attribue l'animal.
             case 4->{
                 char genre = 0;
                 do {
@@ -562,6 +584,8 @@ public class Main {
             } while (genre != 'm' && genre != 'f');
             arrayOfAnimal.get(animalInt-1).setGenre(genre);
                 System.out.println("Le genre de l'animal a été modifier.");}
+
+            //Si l'usagé choisis de modifier l'alimentation de l'animal, on lui demande de sélectionner sa nouvelle alimentation et on l'attribue l'animal.
             case 5->{
                 String aliment = null;
                 String msgAliment=("Entrer l'aliment qui sera principalement servi à l'animal\n[1] : Viande\n[2] : Graine\n[3] : Foin\n[4] : Autre ");
@@ -580,27 +604,35 @@ public class Main {
                 arrayOfAnimal.get(animalInt-1).setFrequenceRation(MyMethods.readChoix(msgFreq,1,6));
                 System.out.println("Le rationnement de l'animal a été modifier.");;
             }
+            //Si l'usagé choisis de modifier la date de naissance l'animal, On lui demande d'entrer sa nouvelle date de naissance et on l'attribue l'animal.
             case 6->{String msgDdn=("Entrez la date de naissance de l'animal (jj/mm/aaaa) : ");
                 Date Ddn= (MyMethods.readDate(msgDdn));
                 arrayOfAnimal.get(animalInt-1).setDdn(String.valueOf(Ddn));
                 System.out.println("La date de naissance de l'animal a été modifier.");}
 
+            //Si l'usagé choisis de modifier la date de d'arrivée l'animal, On lui demande d'entrer sa nouvelle date d'arrivée et on l'attribue l'animal.
             case 7->{String msgArrive=("Entrer la date d'arrivée de l'animal (jj/mm/aaaa) : ");
                 Date dateArrive = MyMethods.readDate(msgArrive);
                 arrayOfAnimal.get(animalInt-1).setDateArrivee(String.valueOf(dateArrive));
                 System.out.println("La date d'arrivé de l'animal a été modifier.");}
+
+            //Si l'usagé choisis de modifier le lieu de naissance l'animal, On lui demande d'entrer son nouveau lieu de naissance et on l'attribue l'animal.
             case 8->{
                 // Demande de saisie du lieu de naissance de l'animal.
                 System.out.println("Entrez le lieu de naissance de l'animal :");
                 String lieuNaissance = sc.next();
                 arrayOfAnimal.get(animalInt-1).setLieuNaissance(lieuNaissance);
                 System.out.println("Le lieu de naissance de l'animal a été modifier.");}
+
+            //Si l'usagé choisis de modifier le groupe social de l'animal, On lui demande d'entrer son nouveau groupe social et on l'attribue l'animal.
             case 9->{
                 // Demande de saisie du groupe social de l'animal.
                 System.out.println("Entrez le groupe social de l'animal : ");
                 String groupeSocial= sc.next();
                 arrayOfAnimal.get(animalInt-1).setGroupeSocial(groupeSocial);
                 System.out.println("Le groupe social de l'animal a été modifier.");}
+
+            //Si l'usagé choisis de modifier l'enclos de l'animal, On lui demande de sélectionner son nouvel enclos et on l'attribue l'animal si l'enclos existe.
             case 10->{
                 // Demande à l'utilisateur de choisir la zone où l'animal sera logé.
                 String msgZone=("Choissez le nom de la zone oû l'animal sera logé: \n[1] : Herbe \n[2] : Carni \n[3] : Omni");
@@ -626,7 +658,6 @@ public class Main {
                     break;
 
                 }
-
                 arrayOfAnimal.get(animalInt-1).setNomZone(nomZone);
                 arrayOfAnimal.get(animalInt-1).setNumZone(numZone);
                 arrayOfAnimal.get(animalInt-1).setNumEnclos(numEnclos);
