@@ -1,10 +1,15 @@
 public class Enclos {
+    // Déclaration des propriétés qui seront utilisées dans le constructeur.
     private String zoneName;
     private int zoneNum;
     private int enclosNum;
     private tailleEnclos taille;
     private typeEnclos type;
 
+    // CONSTRUCTEUR VIDE pour créer un enclos sans propriétés.
+    public Enclos(){};
+
+    // Constructeur pour créer un enclos avec l'aide de ses propriétés.
     public Enclos(String zoneName, int zoneNum, int enclosNum, tailleEnclos taille, typeEnclos type) {
         this.zoneName = zoneName;
         this.zoneNum = zoneNum;
@@ -13,6 +18,7 @@ public class Enclos {
         this.type = type;
     }
 
+    // Setters et getters pour modifier et accéder aux informations des enclos.
     public String getZoneName() {
         return zoneName;
     }
@@ -49,8 +55,10 @@ public class Enclos {
         this.enclosNum = enclosNum;
     }
 
+    // Méthode qui retourne le nom complet de l'enclos.
     public String Enclos() {return getZoneName()+getZoneNum()+"."+getEnclosNum();}
 
+    // Méthode toString qui affiche correctement les informations des enclos.
     @Override
     public String toString() {
         return "************************** "+Enclos()+" **************************\n"+

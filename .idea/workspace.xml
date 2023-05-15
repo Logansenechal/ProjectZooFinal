@@ -6,7 +6,12 @@
   <component name="ChangeListManager">
     <list default="true" id="2cbb9ed2-23e0-455e-90e7-aab482a9cb23" name="Changes" comment="Tp2 ProjectZoo">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Main.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Main.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Aliment.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Aliment.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Animal.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Animal.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Employe.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Employe.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Enclos.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Enclos.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Gardien.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Gardien.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Nourrisseur.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Nourrisseur.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -61,8 +66,33 @@
       <option name="project" value="LOCAL" />
       <updated>1682433560113</updated>
     </task>
-    <option name="localTasksCounter" value="4" />
+    <task id="LOCAL-00004" summary="Tp2 ProjectZoo">
+      <created>1684163134759</created>
+      <option name="number" value="00004" />
+      <option name="presentableId" value="LOCAL-00004" />
+      <option name="project" value="LOCAL" />
+      <updated>1684163134759</updated>
+    </task>
+    <task id="LOCAL-00005" summary="Tp2 ProjectZoo">
+      <created>1684163250912</created>
+      <option name="number" value="00005" />
+      <option name="presentableId" value="LOCAL-00005" />
+      <option name="project" value="LOCAL" />
+      <updated>1684163250912</updated>
+    </task>
+    <option name="localTasksCounter" value="6" />
     <servers />
+  </component>
+  <component name="Vcs.Log.Tabs.Properties">
+    <option name="TAB_STATES">
+      <map>
+        <entry key="MAIN">
+          <value>
+            <State />
+          </value>
+        </entry>
+      </map>
+    </option>
   </component>
   <component name="VcsManagerConfiguration">
     <MESSAGE value="Tp2 ProjectZoo" />
